@@ -15,6 +15,7 @@ tab1, tab2, tab3 = st.tabs(["Plotter", "Post Game Win Probabilities", "All Game 
 # makes tab 1 which plots wp throughout the game
 with tab1:
     st.title("2025 College Football Win Probability Plotter")
+    st.subheader("By: Austin Hayes")
     st.subheader("Welcome to the 2025 College Football Win Probability Plotter!")
 
     st.write("- This page creates a line plot of the win probability for each team throughout the game.")
