@@ -32,15 +32,14 @@ with tab1:
                 #row = game_row.iloc[0]
                 st.write(f"Game ID: {game_id} corresponds to the 2025 showdown between {game_row['homeTeamName'].iloc[0]} and {game_row['awayTeamName'].iloc[0]}")
                 fig, ax = plt.subplots()
-
                 ax.plot(game_row['game_play_number'], game_row['home_wp_after'], label=game_row['homeTeamName'].iloc[0])
                 ax.plot(game_row['game_play_number'], game_row['away_wp_after'], label=game_row['awayTeamName'].iloc[0])
-                ax.set_xlabel("Play Number", color="white")
-                ax.set_ylabel("Win Probability (%)", color="white")
-                ax.set_title("Win Probability Throughout The Game", color="white")
-                ax.tick_params(colors="white")
+                ax.set_xlabel("Play Number", color="black")
+                ax.set_ylabel("Win Probability (%)", color="black")
+                ax.set_title("Win Probability Throughout The Game", color="black")
+                ax.tick_params(colors="black")
                 for spine in ax.spines.values():
-                    spine.set_color("white")
+                    spine.set_color("black")
                 ax.legend()
 
                 st.pyplot(fig)
@@ -54,23 +53,27 @@ with tab2:
     st.write("This page creates a stacked bar chart of the win probabilities for each team after the game using the box score data.")
 
     user_input_2 = st.text_input("Please Enter a Game ID (e.g., 401756846):", key="game_id_input_2")
-    if user_input_2:
+    if user_input_2: # C:\Users\ajhay\AppData\Local\Programs\Python\Python312\python.exe -m streamlit run app2.py
         try:
-                    game_id_2 = int(user_input_2)
-                    game_row_2 = predictions[predictions['game_id'] == game_id_2]
-                    if game_row_2.empty:
-                        st.warning(f"No game found with ID: {game_id_2}. Please check the 'All Game IDs' tab and try again.")
-                    else:
-                        row = game_row_2.iloc[0]
-                        st.write(f"Game ID: {game_id_2} corresponds to the 2025 showdown between {row['team']} and {row['opponent']}")
-                        st.write(f"Predicted Win Probability for {row['team']}: {row['predicted_win_prob']:.2%}")
-                        st.write(f"Predicted Win Probability for {row['opponent']}: {row['opponent_win_prob']:.2%}") 
-                        fig_2, ax_2 = plt.subplots()
-                        sizes_2 = [row['predicted_win_prob'], row['opponent_win_prob']]
-                        labels_2 = [row['team'], row['opponent']]
-                        ax_2.bar(sizes_2, labels=labels_2, autopct="%1.1f%%", startangle=90)
-                        ax_2.axis("equal")  # keeps it circular
-                        st.pyplot(fig_2)
+            game_id_2 = int(user_input_2)
+            game_row_2 = predictions[predictions['game_id'] == game_id_2]
+            if game_row_2.empty:
+                st.warning(f"No game found with ID: {game_id_2}. Please check the 'All Game IDs' tab and try again.")
+            else:
+                row = game_row_2.iloc[0]
+                st.write(f"Game ID: {game_id_2} corresponds to the 2025 showdown between {row['team']} and {row['opponent']}")
+                st.write(f"Predicted Win Probability for {row['team']} (according to the model): {row['predicted_win_prob']:.2%}")
+                st.write(f"Predicted Win Probability for {row['opponent']} (according to the model): {row['opponent_win_prob']:.2%}") 
+                fig_2, ax_2 = plt.subplots()
+                labels_2 = [row['team'], row['opponent']]
+                matchup_label = f"{row['team']} vs {row['opponent']}"
+                ax_2.bar(matchup_label, row['predicted_win_prob']*100, label=row['team'], color="#1f77b4")
+                ax_2.bar(matchup_label, row['opponent_win_prob']*100, bottom=row['predicted_win_prob']*100, label=row['opponent'], color="#ff7f0e")
+                ax_2.set_ylabel("Win Probability (%)", color="black")
+                ax_2.set_title("Post Game Win Probabilities (according to the model)", color="black")
+                ax_2.tick_params(colors="black")
+                ax_2.legend()
+                st.pyplot(fig_2)
         
         except ValueError:
             st.error("Please enter a valid numeric Game ID with 9 digits.")
