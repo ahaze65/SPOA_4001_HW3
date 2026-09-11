@@ -53,7 +53,7 @@ with tab2:
     st.write("This page creates a stacked bar chart of the win probabilities for each team after the game using the box score data.")
 
     user_input_2 = st.text_input("Please Enter a Game ID (e.g., 401756846):", key="game_id_input_2")
-    if user_input_2: # C:\Users\ajhay\AppData\Local\Programs\Python\Python312\python.exe -m streamlit run app2.py
+    if user_input_2:
         try:
             game_id_2 = int(user_input_2)
             game_row_2 = predictions[predictions['game_id'] == game_id_2]
@@ -70,7 +70,7 @@ with tab2:
                 ax_2.bar(matchup_label, row['predicted_win_prob']*100, label=row['team'], color="#1f77b4")
                 ax_2.bar(matchup_label, row['opponent_win_prob']*100, bottom=row['predicted_win_prob']*100, label=row['opponent'], color="#ff7f0e")
                 ax_2.set_ylabel("Win Probability (%)", color="black")
-                ax_2.set_title("Post Game Win Probabilities (according to the model)", color="black")
+                ax_2.set_title("Post Game Win Probabilities (According to the Model)", color="black")
                 ax_2.tick_params(colors="black")
                 ax_2.legend()
                 st.pyplot(fig_2)
