@@ -8,12 +8,12 @@ import seaborn as sns
 predictions = pd.read_csv('predictions_2025.csv', index_col=False)
 
 # seperate into tabs
-tab1, tab2 = st.tabs(["Predictor", "All Game IDs"])
+tab1, tab2 = st.tabs(["Plotter", "All Game IDs"])
 
 # make tab 1 (does main visualization)
 with tab1:
-    st.title("2025 College Football Win Probability Predictor")
-    st.write("Welcome to the 2025 College Football Win Probability Predictor!")
+    st.title("2025 College Football Win Probability Plotter")
+    st.write("Welcome to the 2025 College Football Win Probability Plotter!")
 
     user_input = st.text_input("Please Enter a Game ID (e.g., 401756846):")
     if user_input:
